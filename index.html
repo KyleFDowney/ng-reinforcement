@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--- <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/> --->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!--- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> --->
+    <script type="text/javascript" src="js/javascript.js"></script>
+    <title>Angular Homework Exercises</title>
+  </head>
+
+  <body ng-app="myApp">
+
+<!---START controller 1 --->
+    <div ng-controller="itemController">
+      <div class="repeat-container tab-control" data-role="tab-control" ng-repeat="art in Gems | limitTo:69">
+
+        <div class="item-border">
+      <h1 class="item-name">{{art.name}}</h1>
+      <div ng-repeat="photos in art.images">
+        <a href="{{photos.full}}" target="_blank">
+        <img class="item-thumb" ng-src="{{photos.thumb}}" alt="{{art.name}}" onclick="">
+        </a>
+      </div>
+      <p class="item-dimensions">{{art.dimensions}}</p>
+      <!-- review controller -->
+      <section ng-controller="panelController">
+        <ul class="nav nav-pills">
+          <li class="nav-item" ng-class="{active:tab===1}"><a ng-click="selectTab(1)" href="#tab3">Description</a></li>
+          <li class="nav-item" ng-class="{active:tab===2}"><a ng-click="selectTab(2)" href="#tab3">Reviews</a></li>
+        </ul>
+        <div class="panel" ng-show="tab === 1">
+            <p>{{art.description}}</p>
+        </div>
+        <div class="panel" ng-show="tab === 2">
+            <h4>Reviews</h4>
+            <blockquote class="reviews" ng-repeat="i in art.reviews">
+              <h3><cite>{{i.stars}} out of 5</cite></h3>
+              <p>{{i.body}}</p>
+              <h6><cite>--{{i.author}}</cite></h6>
+            </blockquote>
+
+            <h4>Write a Review</h4>
+            <form name="reviewForm" ng-controller="reviewController" ng-submit="addReview(art)">
+              <blockquote>
+                <h3><cite>{{newReview.stars}} out of 5</cite></h3>
+                <p>{{newReview.body}}&nbsp;</p>
+                <h6><cite>--{{newReview.author}}</cite></h6>
+              </blockquote>
+
+            <div class="form-group">
+              <label for="stars" class="control-label">Review</label>
+              <select class="form-control" name="stars" ng-model="newReview.stars">
+                <option value="5" selected>5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+
+
+
+
+              </select>
+        </div>
+        <div class="form-group">
+          <label for="body">Review</label>
+          <textarea class="form-control" name="body" placeholder="Write your review..." ng-model="newReview.body" ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="author" class="control-label">Author</label>
+          <input class="submit-username" type="username" name="author" placeholder="username" ng-model="newReview.author">
+        </div>
+        <input type="submit" class="btn btn-default" value="Add Review">
+</form>
+      </section>
+      <button ng-show="art.canPurchase" class="btn btn-success item-button"> Add to Cart</button>
+      </div>
+
+      </div>
+    </div>
+
+
+
+
+  </body>
+</html>
